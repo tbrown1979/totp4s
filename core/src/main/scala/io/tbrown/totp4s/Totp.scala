@@ -31,7 +31,7 @@ object Totp {
   def checkCode[F[_]: Sync: Timer](code: Code, secret: Secret, timeStep: TimeStep, window: Window, hmac: Hmac): F[Boolean] =
     for {
       seconds <- Timer[F].clock.monotonic(TimeUnit.SECONDS)
-      digits  <- Sync[F].fromEither(RefType.applyRef[Digits](code.value.toString.length).leftMap(new RuntimeException(_)))
+      digits  <- Sync[F].fromEither(RefType.applyRef[Digits](code.value.toString.length).leftMap(InvalidCodeFormat))
       valid   <- List.range(0, window.value).existsM { i =>
         val timeSteps = TimeSteps((seconds - timeStep.value * i) / timeStep.value)
         genCodeInternal(secret, digits, timeSteps, hmac).map(_ === code)

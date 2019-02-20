@@ -70,6 +70,14 @@ class TotpSpec extends Specification with ScalaCheck {
         val genned = genCode[IO](secret, RefType.applyRefM[Digits](6), defaultTimeStep, HmacSha1)(Sync[IO], t).unsafeRunSync
         checkCode[IO](genned, secret, defaultTimeStep, window, HmacSha1)(Sync[IO], t2).unsafeRunSync must beFalse
       }
+
+      "fail when we have a code that is not of valid length" in {
+        val secret = Secret("something random")
+        implicit val t = testTimer(0)
+
+        checkCode[IO](Code("1"), secret, defaultTimeStep, window, HmacSha1).unsafeRunSync must throwA[InvalidCodeFormat]
+        checkCode[IO](Code("123456789"), secret, defaultTimeStep, window, HmacSha1).unsafeRunSync must throwA[InvalidCodeFormat]
+      }
     }
 
     "RFC Sha-1" should {
@@ -229,6 +237,7 @@ class TotpSpec extends Specification with ScalaCheck {
         genned must_== Code("47863826")
         checkCode[IO](genned, secret, defaultTimeStep, window, HmacSha512).unsafeRunSync must beTrue
       }
+
     }
   }
 }
