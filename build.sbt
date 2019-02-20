@@ -45,7 +45,7 @@ val betterMonadicForV = "0.3.0-M4"
 
 // General Settings
 lazy val commonSettings = Seq(
-  organization := "io.tbrown",
+  organization := "io.github.tbrown1979",
 
   scalaVersion := "2.12.8",
   crossScalaVersions := Seq(scalaVersion.value, "2.11.12"),
