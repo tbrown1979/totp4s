@@ -17,31 +17,16 @@ lazy val docs = project.in(file("docs"))
   .enablePlugins(TutPlugin)
 
 lazy val contributors = Seq(
-  "tbrown1979" -> "Taylor Brown"
+  "tbrown1979" -> "Taylor Brown",
+  "trentio" -> "Trent Johnson"
 )
 
-val catsV = "1.5.0"
-val kittensV = "1.2.0"
-val catsEffectV = "1.1.0"
-val mouseV = "0.18"
-val shapelessV = "2.3.3"
-val fs2V = "1.0.2"
-val http4sV = "0.20.0-M4"
-val circeV = "0.10.1"
-val doobieV = "0.6.0"
-val pureConfigV = "0.10.0"
-val refinedV = "0.9.3"
-
-val log4catsV = "0.2.0"
-val catsParV = "0.2.0"
-val catsTimeV = "0.2.0"
-val fuuidV = "0.2.0-M3"
-val lineBackerV = "0.2.0"
-
+val catsV = "1.6.1"
+val catsEffectV = "1.3.0"
+val refinedV = "0.9.5"
 val specs2V = "4.3.5"
-
-val kindProjectorV = "0.9.9"
-val betterMonadicForV = "0.3.0-M4"
+val kindProjectorV = "0.10.2"
+val betterMonadicForV = "0.3.0"
 
 // General Settings
 lazy val commonSettings = Seq(
@@ -57,7 +42,7 @@ lazy val commonSettings = Seq(
       "-doc-source-url", "https://github.com/tbrown1979/totp4s/blob/v" + version.value + "€{FILE_PATH}.scala"
   ),
 
-  addCompilerPlugin("org.spire-math" % "kind-projector" % kindProjectorV cross CrossVersion.binary),
+  addCompilerPlugin("org.typelevel" % "kind-projector" % kindProjectorV cross CrossVersion.binary),
   addCompilerPlugin("com.olegpy" %% "better-monadic-for" % betterMonadicForV),
   libraryDependencies ++= Seq(
     "org.typelevel"               %% "cats-core"                  % catsV,
