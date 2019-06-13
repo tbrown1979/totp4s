@@ -12,7 +12,7 @@ class TotpSpec extends Specification with ScalaCheck {
 
   def testTimer(time: Long): Timer[IO] = new Timer[IO] {
     override def clock: Clock[IO] = new Clock[IO] {
-      override def realTime(unit: TimeUnit): IO[Long] = ???
+      override def realTime(unit: TimeUnit): IO[Long] = IO(time)
 
       override def monotonic(unit: TimeUnit): IO[Long] = IO(time)
     }

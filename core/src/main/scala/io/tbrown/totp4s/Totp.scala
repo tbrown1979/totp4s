@@ -24,13 +24,13 @@ object Totp {
     }
 
   def genCode[F[_]: Sync : Timer](key: Secret, digits: Digits, timeStep: TimeStep, hmac: Hmac): F[Code] =
-    Timer[F].clock.monotonic(TimeUnit.SECONDS).flatMap { seconds =>
+    Timer[F].clock.realTime(TimeUnit.SECONDS).flatMap { seconds =>
       genCodeInternal(key, digits, TimeSteps(seconds / timeStep.value), hmac)
     }
 
   def checkCode[F[_]: Sync: Timer](code: Code, secret: Secret, timeStep: TimeStep, window: Window, hmac: Hmac): F[Boolean] =
     for {
-      seconds <- Timer[F].clock.monotonic(TimeUnit.SECONDS)
+      seconds <- Timer[F].clock.realTime(TimeUnit.SECONDS)
       digits  <- Sync[F].fromEither(RefType.applyRef[Digits](code.value.toString.length).leftMap(InvalidCodeFormat))
       valid   <- List.range(0, window.value).existsM { i =>
         val timeSteps = TimeSteps((seconds - timeStep.value * i) / timeStep.value)
