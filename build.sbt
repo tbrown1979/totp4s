@@ -25,7 +25,7 @@ val catsV = "1.6.1"
 val catsEffectV = "1.3.0"
 val refinedV = "0.9.5"
 val specs2V = "4.3.5"
-val kindProjectorV = "0.10.2"
+val kindProjectorV = "0.10.3"
 val betterMonadicForV = "0.3.0"
 
 // General Settings
